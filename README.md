@@ -21,7 +21,7 @@ This Python script looks at the default Insight in InsightCloudSec "Compute Inst
      Instance Exposing Public RDP /  Instance Exposing Public SSH (Select one of the query filters based on the selection in Step 4)
 
 **Work in progress (based on feedback)**
-1. Improve error handling
+1. Improve error handling (provide details on the error)
 2. Update existing data collection rather than creating a new one everytime.
 
 

@@ -20,7 +20,6 @@ import time
 #If scan_port changed to 22, change the datacollection_name variable to SSH
 base_url = '<Add ICS URL here>'
 apikey = '<Add API Key here>'
-#apikey = 'zZyKy1U8grfFJ1H0vtrI_NKeb1gcHzbQxPYjlcgl45N0Kd-vyr'
 scan_port = 3389
 datacollection_name= "RDP"
 

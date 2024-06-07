@@ -15,9 +15,11 @@ import json
 import requests
 import socket
 import time
+import sys
 
 #Change the base_URL, apikey and scan_port (tested for TCP 22 / 3389)
 #If scan_port changed to 22, change the datacollection_name variable to SSH
+
 base_url = '<Add ICS URL here>'
 apikey = '<Add API Key here>'
 scan_port = 3389
@@ -41,7 +43,10 @@ headers = {
 #and returns all the details for the resources and handles pagination. 
 
 def resource_query(cursor):
+
     # v3 supports up to 1000 resources per call
+    #print("1")
+     
     payload= {
                 "selected_resource_type": "instance",
                 "resource_types": ["instance"],
@@ -57,7 +62,7 @@ def resource_query(cursor):
         data=json.dumps(payload),
         headers=headers
     )
-    return response.json()
+    return response
 
 #This function takes the Public IP's from the default Insight "Compute Instance With Public IP Attached (backoffice:536)" 
 #and checks if the IP is publicly accessible
@@ -99,31 +104,39 @@ try:
     cursor = None
     while True:
         response = resource_query(cursor)
+        if response.status_code == 401:
+            print("Access denied error. Please check your API keys or permissions.")
+            sys.exit()
+        response = response.json()
         cursor = response.get('next_cursor', False)
-        #print(cursor)
         if cursor:
-            for x in response['resources']: 
-                IP.append(x['instance']['public_ip_address'])
+            for x in response['resources']:
+                try:
+                    IP.append(x['instance']['public_ip_address'])
+                except:
+                    continue
         else:
             for x in response['resources']:
-                IP.append(x['instance']['public_ip_address'])
+                try:
+                    IP.append(x['instance']['public_ip_address'])
+                except:
+                    continue
             print("Public IP List for all compute instances from InsightCloudSec Insight " + str(insight_id) + "\n" + str(IP))
             break
 
     Not_Public_IP = check_public(IP)
     print ("\nPublic IP's which are not accesible to port " + str(scan_port)+ " externally\n" + str(Not_Public_IP))
     if not Not_Public_IP:
-        print("\nAll Public IP's from the Insight " + str(insight_id) + "are publicly accessible")
+        print("\nAll Public IP's from the Insight " + str(insight_id) + "are publicly accessible over the internet on port " +str(scan_port))
         print("\nNo Data Collection Created")
         print("\n#############################END###########################################")
     else:
-        print("\nCreating Data Collection in InsightCloudSec with list of Public IP's which are not accessible over the internet over port "+str(scan_port))
+        print("\nCreating Data Collection in InsightCloudSec with list of Public IP's which are NOT accessible over the internet on port " +str(scan_port))
         create_datacollection(Not_Public_IP)
         print("\nData Collection created, login to the InsightCloudSec UI to view the same")
         print("\nData Collection Name: "+ "\033[1;37;40m" + str(datacollection_name + timestr))    
         print("\n\033[1;32;40mSelect the data collection on InsightCloudSec UI for the Insight to ignore the Public IP's which are not accessible")
         print("\n\033[1;32;40m#############################END###########################################")
-except:
-    print("\033[1;31;40mERROR: Something wrong with the script, please check API Keys")
-
+except requests.exceptions.RequestException as e:
+        print(str(e))
 

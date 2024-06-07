@@ -8,7 +8,7 @@
 2. Org admin user in InsightCloudSec with API Keys. 
 
 
-**Getting Started**
+## Getting Started
 
 ***Step 1***. Download the script 
 
@@ -20,9 +20,9 @@
 
 ***Step 5***. Run the script on your workstation - workstation will need public internet access.\
 
-     Example: ```python PublicIP-Scan.py``` 
+     Example: python PublicIP-Scan.py
                             OR 
-     Example: ```python3 PublicIP-Scan.py```
+     Example: python3 PublicIP-Scan.py
 
 ***Step 7***. Upon completion - a data collection will be created with all the public IP's which are NOT accessible over the internet for the specified port in ***Step 4***. The name of the data collection can be found in the output of the script.
 
@@ -30,7 +30,7 @@
      ```Instance With Public IP Attached``` - Select the data collection created in ***Step 6*** (This will ignore the IP's which are not accessible over the internet) + 
      ```Instance Exposing Public RDP / Instance Exposing Public SSH``` (Select one of the query filters based on the selection in Step 4)
 
-### Work in progress (based on feedback)
+## Work in progress (based on feedback)
 
 1. Improve error handling (provide more details on the error)
 2. Update existing data collection rather than creating a new one everytime.

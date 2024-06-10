@@ -18,7 +18,7 @@
 
 ***Step 4***. (Optional) Change the scan_port variable and datacollection_name variable (Note: Currently                tested only for TCP Port 22 and 3389) 
 
-***Step 5***. Run the script on your workstation - workstation will need public internet access.\
+***Step 5***. Run the script on your workstation - workstation will need public internet access.
 
      Example: python PublicIP-Scan.py
                             OR 

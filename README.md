@@ -16,7 +16,7 @@
 
 ***Step 3***. Add an InsightCloudSec apikey variable 
 
-***Step 4***. (Optional) Change the scan_port variable and datacollection_name variable (Note: Currently                tested only for TCP Port 22 and 3389) 
+***Step 4***. (Optional) Change the scan_port variable and datacollection_name variable (Note: Currently tested only for TCP Port 22 and 3389) 
 
 ***Step 5***. Run the script on your workstation - workstation will need public internet access.
 
@@ -24,10 +24,10 @@
                             OR 
      Example: python3 PublicIP-Scan.py
 
-***Step 7***. Upon completion - a data collection will be created with all the public IP's which are NOT accessible over the internet for the specified port in ***Step 4***. The name of the data collection can be found in the output of the script.
+***Step 6***. Upon completion - a data collection will be created with all the public IP's which are NOT accessible over the internet for the specified port in ***Step 4***. The name of the data collection can be found in the output of the script.
 
 ***Step 8***. Create a custom insight using the following query filters
-     ```Instance With Public IP Attached``` - Select the data collection created in ***Step 6*** (This will ignore the IP's which are not accessible over the internet) + 
+     ```Instance With Public IP Attached``` - Select the data collection created in ***Step 5*** (This will ignore the IP's which are not accessible over the internet) + 
      ```Instance Exposing Public RDP / Instance Exposing Public SSH``` (Select one of the query filters based on the selection in Step 4)
 
 ## Work in progress (based on feedback)
